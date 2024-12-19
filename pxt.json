@@ -6,7 +6,7 @@
         "v3": "*"
     },
     "files": [
-        "main.ts",
+        "air530.ts",
         "README.md"
     ],
     "targetVersions": {
