@@ -1,0 +1,19 @@
+{
+    "name": "pxt-air530-gps-calliope",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "v3": "*"
+    },
+    "files": [
+        "main.ts",
+        "README.md"
+    ],
+    "targetVersions": {
+        "target": "7.0.3",
+        "targetId": "calliopemini"
+    },
+    "supportedTargets": [
+        "calliopemini"
+    ]
+}
