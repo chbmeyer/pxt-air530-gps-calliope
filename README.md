@@ -34,6 +34,11 @@ Außerdem habe ich PerplexityAI bemüht.
 
 TODO: Funktionstests!
 
+TODO: Localisation
+
+TODO: hat der Calliope wirklich nur eine einzige serielle Schnittstelle?
+Das macht es schwierig, die Informationen mit WiFi / LoRaWAN zu versenden.
+
 
 ### Als Erweiterung verwenden
 
@@ -51,5 +56,3 @@ Um dieses Repository in MakeCode zu bearbeiten.
 * öffne [https://makecode.calliope.cc/](https://makecode.calliope.cc/)
 * klicke auf **Importieren** und dann auf **Importiere URL**
 * füge **https://github.com/chbmeyer/pxt-air530-gps-calliope** ein und klicke auf Importieren
-TODO: hat der Calliope wirklich nur eine einzige serielle Schnittstelle?
-Das macht es schwierig, die Informationen mit WiFi / LoRaWAN zu versenden.
