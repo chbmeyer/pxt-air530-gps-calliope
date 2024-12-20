@@ -56,7 +56,7 @@ namespace Air530 {
     }
 
     function parseNMEA(sentence: string): void {
-        let type = sentence.slice(3, 6)
+        let type = sentence.slice(3, 6);
         if (type === "RMC" || type === "GGA" || type === "GSA" || type === "GSV" || type === "ZDA") {
             sentences[type] = sentence
         }
@@ -65,7 +65,7 @@ namespace Air530 {
     //% blockId="Air530_getTime" block="GNSS Time and Date $TD"
     //% TD.defl = TimeDateType.DateTime
     export function getTimeAndDate(TD: TimeDateType): string {
-        let s = sentences.rmc || sentences.zda
+        let s = sentences.RMC || sentences.zda
         if (!s) return "Keine Daten"
         let p = s.split(',')
         let time = formatTime(p[1])
