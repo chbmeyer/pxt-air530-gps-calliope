@@ -24,8 +24,10 @@ enum PositionType {
     all
 }
 enum MoveType {
-    //% block="Speed"
-    speed,
+    //% block="Speed in km/h"
+    speed_kmh,
+    //% block="Speed in m/s"
+    speed_ms,
     //% block="Course"
     course,
     //% block="all movement information"
@@ -87,7 +89,7 @@ namespace Air530 {
     //% TD.defl = TimeDateType.DateTime
     export function getTimeAndDate(TD: TimeDateType): string {
         let s = sentences.RMC || sentences.ZDA
-        if (!s) return "Keine Daten"
+        if (!s) return "No data"
         let p = s.split(',')
         let time = formatTime(p[1])
         let date = s === sentences.RMC ? formatDate(p[9]) : `${p[4]}-${p[3]}-${p[2]}`
@@ -95,14 +97,13 @@ namespace Air530 {
             case TimeDateType.date: return date
             case TimeDateType.time: return time
             case TimeDateType.datetime: return `${date} ${time}`
-            default: return "Ungültige Auswahl"
         }
     }
 
 
     //% blockId="Air530_getPos" block="GNSS Position $position im Format %format"
     export function getPosition(position: PositionType, format: CoordinateFormat): string {
-        if (!sentences.GGA) return "Keine Daten"
+        if (!sentences.GGA) return "No data"
         let p = sentences.GGA.split(',')
         let lat = formatCoord(p[2], p[3], "NS", format)
         let lon = formatCoord(p[4], p[5], "EW", format)
@@ -112,31 +113,31 @@ namespace Air530 {
             case PositionType.lon: return lon
             case PositionType.latlon: return `${lat}, ${lon}`
             case PositionType.alt: return alt
-            case PositionType.all: return `Breite: ${lat}, Länge: ${lon}, Höhe: ${alt}`
-            default: return "Ungültige Auswahl"
+            case PositionType.all: return `${lat}, ${lon}, Altitude: ${alt}`
         }
     }
 
     //% blockId="Air530_getMovement" block="GNSS Movement $movement"
     export function getMovement(movement: MoveType): string {
-        if (!sentences.RMC) return "Keine Daten"
+        if (!sentences.RMC) return "No data"
         let p = sentences.RMC.split(',')
-        let speed = Math.round(parseFloat(p[7]) * 1.852 * 100) / 100
+        let speed_kmh = Math.round(parseFloat(p[7]) * 1.852 * 100) / 100
+        let speed_ms = Math.round(parseFloat(p[7]) * 0.51444444444 * 100) / 100
         let course = p[8]
         switch (movement) {
-            case MoveType.speed: return `${speed}`
+            case MoveType.speed_kmh: return `${speed_kmh}`
+            case MoveType.speed_ms: return `${speed_ms}`
             case MoveType.course: return `${course}`
-            case MoveType.all: return `Geschwindigkeit: ${speed} km/h, Richtung: ${course}°`
-            default: return "Ungültige Auswahl"
+            case MoveType.all: return `Speed: ${speed_kmh} km/h, Course: ${course}°`
         }
     }
 
     //% blockId="Air530_getDetails" block="GNSS Details $info"
     export function getDetails(info: InfoType): string {
         let details: (() => string)[] = [
-            () => sentences.GSV ? "Satelliten-IDs: " + sentences.GSV.split(',').slice(4).filter((_, i) => i % 4 === 0).join(", ") : "Keine Daten",
+            () => sentences.GSV ? "Sat-IDs: " + sentences.GSV.split(',').slice(4).filter((_, i) => i % 4 === 0).join(", ") : "No data",
             () => {
-                if (!sentences.GSV) return "Keine GSV-Daten verfügbar";
+                if (!sentences.GSV) return "No data";
                 let gsvMessages = sentences.GSV.split('$').filter(msg => msg.includes('GSV'));
 
                 let satellitesInView = 0;
@@ -166,29 +167,33 @@ namespace Air530 {
                     `Detaillierte Satelliteninformationen:\n${satelliteDetails.join('\n')}`;
             },
             () => {
-                if (!sentences.GGA) return "Keine Daten"
-                let quality = ["Ungültig", "GPS", "DGPS", "PPS", "RTK", "Float RTK", "Geschätzt", "Manueller Eingabemodus", "Simulationsmodus"][parseInt(sentences.GGA.split(',')[6])] || "Unbekannt"
-                return "Qualität: " + quality
+                if (!sentences.GGA) return "No data"
+                let quality = ["Invalid", "GPS", "DGPS", "PPS", "RTK", "FloatRTK", "Estimated", "Manual", "Simulated"][parseInt(sentences.GGA.split(',')[6])] || "Unknown"
+                // siehe: https://github.com/mikalhart/TinyGPSPlus
+                // GPS  = 2 - 10 Metern im Freien
+                // DGPS = Differential GPS, 0,3 - 2,5 m Genauigkeit
+                // RTK  = Real Time Kinematic (zentimetergenau)
+                return quality
             },
-            () => sentences.GGA ? "Benutzte Satelliten: " + sentences.GGA.split(',')[7] : "Keine Daten",
-            () => sentences.GGA ? "HDOP: " + sentences.GGA.split(',')[8] : "Keine Daten",
+            () => sentences.GGA ? "Benutzte Satelliten: " + sentences.GGA.split(',')[7] : "No data",
+            () => sentences.GGA ? "HDOP: " + sentences.GGA.split(',')[8] : "No data",
             () => {
-                if (!sentences.GSA) return "Keine Daten"
+                if (!sentences.GSA) return "No data"
                 let integrity = ["", "Keine Korrektur", "2D", "3D"][parseInt(sentences.GSA.split(',')[2])] || "Unbekannt"
                 return "Signalintegrität: " + integrity
             },
-            () => sentences.RMC ? "Status: " + (sentences.RMC.split(',')[2] === "A" ? "Aktiv" : "Ungültig") : "Keine Daten",
+            () => sentences.RMC ? "Status: " + (sentences.RMC.split(',')[2] === "A" ? "Aktiv" : "Invalid") : "No data",
             () => details.slice(0, 7).map(f => f()).join("\n")
         ]
         return info >= 0 && info < details.length ? details[info]() : "Ungültige Auswahl"
     }
 
     function formatTime(t: string): string {
-        return t.length >= 6 ? `${t.substr(0, 2)}:${t.substr(2, 2)}:${t.substr(4, 2)}` : "Ungültig"
+        return t.length >= 6 ? `${t.substr(0, 2)}:${t.substr(2, 2)}:${t.substr(4, 2)}` : "Invalid"
     }
 
     function formatDate(d: string): string {
-        return d.length === 6 ? `20${d.substr(4, 2)}-${d.substr(2, 2)}-${d.substr(0, 2)}` : "Ungültig"
+        return d.length === 6 ? `20${d.substr(4, 2)}-${d.substr(2, 2)}-${d.substr(0, 2)}` : "Invalid"
     }
 
     function formatCoord(c: string, d: string, t: string, format: CoordinateFormat): string {
@@ -211,6 +216,6 @@ namespace Air530 {
                     return `${d}${deg}° ${min}'`;
             }
         }
-        return "Ungültig"
+        return "Invalid"
     }
 }
