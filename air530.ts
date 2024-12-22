@@ -1,7 +1,6 @@
 /**
  * GPS-Funktionen für das Air530 GPS-Modul
  */
-//% weight=100 color=#0fbc11 icon="\uf0ac"
 
 enum TimeDateType {
     //% block="Date"
@@ -49,6 +48,7 @@ enum InfoType {
     Status
 }
 
+//% weight=100 color=#0fbc11 icon="\uf0ac"
 namespace Air530 {
     let rxPin = SerialPin.C16
     let txPin = SerialPin.C17
