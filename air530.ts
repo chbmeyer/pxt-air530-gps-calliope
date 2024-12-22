@@ -43,14 +43,11 @@ enum CoordinateFormat {
 }
 
 enum InfoType {
-    SatelliteIDs,
-    GSVData,
-    Quality,
     UsedSatellites,
+    Quality,
     HDOP,
     SignalIntegrity,
-    Status,
-    AllDetails
+    Status
 }
 
 namespace Air530 {
@@ -135,37 +132,8 @@ namespace Air530 {
     //% blockId="Air530_getDetails" block="GNSS Details $info"
     export function getDetails(info: InfoType): string {
         let details: (() => string)[] = [
-            () => sentences.GSV ? "Sat-IDs: " + sentences.GSV.split(',').slice(4).filter((_, i) => i % 4 === 0).join(", ") : "No data",
-            () => {
-                if (!sentences.GSV) return "No data";
-                let gsvMessages = sentences.GSV.split('$').filter(msg => msg.includes('GSV'));
-
-                let satellitesInView = 0;
-                let satelliteDetails: string[] = [];
-
-                gsvMessages.forEach(msg => {
-                    let parts = msg.split(',');
-                    if (parts.length >= 4) {
-                        let currentSatellitesInView = parseInt(parts[3]);
-                        if (!isNaN(currentSatellitesInView)) {
-                            satellitesInView += currentSatellitesInView;
-                        }
-
-                        for (let i = 4; i < parts.length - 4; i += 4) {
-                            let prn = parts[i];
-                            let elevation = parts[i + 1];
-                            let azimuth = parts[i + 2];
-                            let snr = parts[i + 3];
-                            if (prn) {
-                                satelliteDetails.push(`Satellit PRN ${prn}: Elevation ${elevation}°, Azimut ${azimuth}°, SNR ${snr} dB`);
-                            }
-                        }
-                    }
-                });
-                
-                return `Anzahl sichtbarer Satelliten: ${satellitesInView}\n` +
-                    `Detaillierte Satelliteninformationen:\n${satelliteDetails.join('\n')}`;
-            },
+            // TODO: GSV ist sehr ergiebig!
+            () => sentences.GGA ? sentences.GGA.split(',')[7] : "No data", // Benutzte Satelliten
             () => {
                 if (!sentences.GGA) return "No data"
                 let quality = ["Invalid", "GPS", "DGPS", "PPS", "RTK", "FloatRTK", "Estimated", "Manual", "Simulated"][parseInt(sentences.GGA.split(',')[6])] || "Unknown"
@@ -175,17 +143,15 @@ namespace Air530 {
                 // RTK  = Real Time Kinematic (zentimetergenau)
                 return quality
             },
-            () => sentences.GGA ? "Benutzte Satelliten: " + sentences.GGA.split(',')[7] : "No data",
-            () => sentences.GGA ? "HDOP: " + sentences.GGA.split(',')[8] : "No data",
+            () => sentences.GGA ? sentences.GGA.split(',')[8] : "No data", // HDOP
             () => {
                 if (!sentences.GSA) return "No data"
                 let integrity = ["", "Keine Korrektur", "2D", "3D"][parseInt(sentences.GSA.split(',')[2])] || "Unbekannt"
-                return "Signalintegrität: " + integrity
+                return integrity
             },
-            () => sentences.RMC ? "Status: " + (sentences.RMC.split(',')[2] === "A" ? "Aktiv" : "Invalid") : "No data",
-            () => details.slice(0, 7).map(f => f()).join("\n")
+            () => sentences.RMC ? (sentences.RMC.split(',')[2] === "A" ? "Aktiv" : "Invalid") : "No data", // Status
         ]
-        return info >= 0 && info < details.length ? details[info]() : "Ungültige Auswahl"
+        return details[info]();
     }
 
     function formatTime(t: string): string {
