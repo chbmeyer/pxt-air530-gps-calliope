@@ -46,7 +46,6 @@ enum InfoType {
     UsedSatellites,
     Quality,
     HDOP,
-    SignalIntegrity,
     Status
 }
 
@@ -132,7 +131,6 @@ namespace Air530 {
     //% blockId="Air530_getDetails" block="GNSS Details $info"
     export function getDetails(info: InfoType): string {
         let details: (() => string)[] = [
-            // TODO: GSV ist sehr ergiebig!
             () => sentences.GGA ? sentences.GGA.split(',')[7] : "No data", // Benutzte Satelliten
             () => {
                 if (!sentences.GGA) return "No data"
@@ -144,11 +142,6 @@ namespace Air530 {
                 return quality
             },
             () => sentences.GGA ? sentences.GGA.split(',')[8] : "No data", // HDOP
-            () => {
-                if (!sentences.GSA) return "No data"
-                let integrity = ["", "Keine Korrektur", "2D", "3D"][parseInt(sentences.GSA.split(',')[2])] || "Unbekannt"
-                return integrity
-            },
             () => sentences.RMC ? (sentences.RMC.split(',')[2] === "A" ? "Aktiv" : "Invalid") : "No data", // Status
         ]
         return details[info]();
