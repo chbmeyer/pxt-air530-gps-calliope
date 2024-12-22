@@ -55,7 +55,7 @@ namespace Air530 {
     let baudRate = BaudRate.BaudRate9600
     let sentences: { [key: string]: string } = { RMC: "", GGA: "", GSA: "", GSV: "", ZDA: "" }
 
-    //% block="Initialize Air-530 GPS with RX $rx TX $tx"
+    //% blockId="Air530_init" block="Initialize Air-530 GPS with RX $rx TX $tx"
     //% rx.defl=SerialPin.C16 tx.defl=SerialPin.C17
     export function initAir530(rx: SerialPin, tx: SerialPin): void {
         rxPin = rx; txPin = tx; baudRate = BaudRate.BaudRate9600
