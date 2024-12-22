@@ -40,22 +40,22 @@ TODO: hat der Calliope wirklich nur eine einzige serielle Schnittstelle?
 Das macht es schwierig, die Informationen mit WiFi / LoRaWAN zu versenden.
 
 ## Detailinformationen
-- SatelliteIDs,
-- GSVData
-   - Anzahl der sichtbaren Satelliten
+- UsedSatellites,
+- Quality ("Ungültig", "GPS", "DGPS", "PPS", "RTK", "Float RTK", "Geschätzt", "Manueller Eingabemodus", "Simulationsmodus")
+- HDOP ("Horizontal Dilution of Precision" oder auf Deutsch "Horizontale Genauigkeitsverschlechterung"), beeinflusst durch die geometrische Anordnung der Satelliten.
+   - Ein HDOP-Wert von 1,0 zeigt an, dass die GPS-Satelliten sehr präzise sind und dass der Empfänger mindestens vier Satelliten sieht, was eine genaue Positionsbestimmung ermöglicht.
+   - Ein HDOP-Wert von 2,0 oder höher zeigt eine schlechtere Genauigkeit an, da die GPS-Satelliten möglicherweise schwer zu orten sind oder dass der Empfänger nicht genügend Satelliten sieht.
+   - In der Regel gilt ein HDOP-Wert unter 2,0 als ausreichend genau für die meisten Anwendungen.
+- Status (A = Aktiv bzw. gültig und V = Void bzw. ungültig)
+
+- Der GSV-Datensatz ist sehr interessant und ergiebig. Da ein Datensatz maximal vier Satelliten umfassen kann, gibt es häufig mehrere GSV-Nachrichten für alle verschiedenen GNSS. In einer Abwägung von Aufwand und Nutzen kam ich zum Ergebnis, dass dies für den schulischen IoT-Einsatz zu komplex wäre. Nicht implementiert sind daher z.B.:
    - PRN (Identifikationsnummer) jedes Satelliten
    - Elevation (Höhenwinkel) jedes Satelliten
    - Azimut (Richtungswinkel) jedes Satelliten
    - Signal-Rausch-Verhältnis (SNR) jedes Satelliten
-- Quality ("Ungültig", "GPS", "DGPS", "PPS", "RTK", "Float RTK", "Geschätzt", "Manueller Eingabemodus", "Simulationsmodus")
-- UsedSatellites,
-- HDOP ("Horizontal Dilution of Precision" oder auf Deutsch "Horizontale Genauigkeitsverschlechterung"), beeinflusst durch die geometrische Anordnung der Satelliten. Ein HDOP-Wert von 1,0 zeigt an, dass die GPS-Satelliten sehr präzise sind und dass der Empfänger mindestens vier Satelliten sieht, was eine genaue Positionsbestimmung ermöglicht. Ein HDOP-Wert von 2,0 oder höher zeigt eine schlechtere Genauigkeit an, da die GPS-Satelliten möglicherweise schwer zu orten sind oder dass der Empfänger nicht genügend Satelliten sieht. In der Regel gilt ein HDOP-Wert unter 2,0 als ausreichend genau für die meisten Anwendungen.
-- SignalIntegrity,
-- Status (A = Aktiv bzw. gültig und V = Void bzw. ungültig)
+ 
 
-
-
-### Als Erweiterung verwenden
+## Als Erweiterung verwenden
 
 Dieses Repository kann als **Erweiterung** in MakeCode hinzugefügt werden.
 
