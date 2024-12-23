@@ -1,0 +1,19 @@
+{
+  "TimeDateType.date|block": "Datum",
+  "TimeDateType.time|block": "Zeit",
+  "TimeDateType.datetime|block": "Datum und Zeit",
+  "PositionType.lat|block": "Geogr. Breite",
+  "PositionType.lon|block": "Geogr. Länge",
+  "PositionType.latlon|block": "Geogr. Breite und Länge",
+  "PositionType.alt|block": "Höhe ü. NN",
+  "PositionType.all|block": "alle Positionsinformationen",
+  "MoveType.speed_kmh|block": "Geschwindigkeit in km/h",
+  "MoveType.speed_ms|block": "Geschwindigkeit in m/s",
+  "MoveType.course|block": "Richtung",
+  "MoveType.all|block": "alle Bewegungsinformationen",
+  "Air530.Air530_init|block": "Initialisieree Air-530 GPS mit RX $rx TX $tx",
+  "Air530.Air530_getTime|block": "GNSS Zeit und Datum $TD",
+  "Air530.Air530_getPos|block": "GNSS Position $position im Format %format",
+  "Air530.Air530_getMovement|block": "GNSS Bewegung $movement",
+  "Air530.Air530_getDetails|block": "GNSS Details $info"
+}
