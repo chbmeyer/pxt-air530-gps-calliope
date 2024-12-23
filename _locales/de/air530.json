@@ -11,9 +11,14 @@
   "MoveType.speed_ms|block": "Geschwindigkeit in m/s",
   "MoveType.course|block": "Richtung",
   "MoveType.all|block": "alle Bewegungsinformationen",
-  "Air530.Air530_init|block": "Initialisieree Air-530 GPS mit RX $rx TX $tx",
-  "Air530.Air530_getTime|block": "GNSS Zeit und Datum $TD",
-  "Air530.Air530_getPos|block": "GNSS Position $position im Format %format",
-  "Air530.Air530_getMovement|block": "GNSS Bewegung $movement",
-  "Air530.Air530_getDetails|block": "GNSS Details $info"
+  "InfoType.UsedSatellites|block": "verwendete Satelliten",
+  "InfoType.quality|block": "Signalqualität",
+  "InfoType.HDOP|block": "HDOP"
+  "InfoType.status|block": "Status"
+  "{id:category}GNSS_Air530": "Air530 Modul",
+  "GNSS_Air530.Air530_init|block": "Initialisieree Air-530 GPS mit RX $rx TX $tx",
+  "GNSS_Air530.Air530_getTime|block": "GNSS Zeit und Datum $TD",
+  "GNSS_Air530.Air530_getPos|block": "GNSS Position $position im Format %format",
+  "GNSS_Air530.Air530_getMovement|block": "GNSS Bewegung $movement",
+  "GNSS_Air530.Air530_getDetails|block": "GNSS Details $info"
 }
