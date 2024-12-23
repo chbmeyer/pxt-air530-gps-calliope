@@ -6,10 +6,10 @@
         "v3": "*"
     },
     "files": [
-        "air530.ts",
+        "README.md",
         "_locales/de/GNSS_Air530-strings.json",
         "_locales/de/GNSS_Air530-jsdocs-strings.json",
-        "README.md"
+        "air530.ts"
     ],
     "targetVersions": {
         "target": "7.0.3",
