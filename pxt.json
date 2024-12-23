@@ -7,8 +7,8 @@
     },
     "files": [
         "air530.ts",
-        "_locales/de/air530-strings.json",
-        "_locales/de/air530-jsdocs-strings.json",
+        "_locales/de/GNSS_Air530-strings.json",
+        "_locales/de/GNSS_Air530-jsdocs-strings.json",
         "README.md"
     ],
     "targetVersions": {
