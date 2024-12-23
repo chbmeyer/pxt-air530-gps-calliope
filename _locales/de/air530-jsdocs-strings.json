@@ -1,0 +1,6 @@
+{
+  "__info" : "Übersetzungen für die JSDoc-Kommentare",
+  "__info" : "Funktions-, Parameter-, Rückgabewertbeschreibungen",
+  "MyExtension.myBlock": "Beschreibung meiner Blockfunktion",
+  "MyExtension.myBlock|param|param": "Beschreibung des Parameters"
+}
