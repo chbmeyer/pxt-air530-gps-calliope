@@ -1,6 +1,6 @@
 {
-  "__info1" : "Übersetzungen für die JSDoc-Kommentare",
-  "__info2" : "Funktions-, Parameter-, Rückgabewertbeschreibungen",
-  "MyExtension.myBlock": "Beschreibung meiner Blockfunktion",
+  "GNSS_Air530": "Ermittelt verschiedene GNSS / GPS Informationen aus den Air530 Modul",
+  "GNSS_Air530.Air530_init": "Initialisiert die serielle Schnittstelle mit dem Air530 Modul",
+  "GNSS_Air530.initAir530": "Initialisiert die serielle Schnittstelle mit dem Air530 Modul",
   "MyExtension.myBlock|param|param": "Beschreibung des Parameters"
 }
