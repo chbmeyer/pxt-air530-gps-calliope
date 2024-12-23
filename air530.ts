@@ -1,5 +1,5 @@
 /**
- * GPS-Funktionen für das Air530 GPS-Modul
+ * Air530 GNSS(GPS) - Info
  */
 
 enum TimeDateType {
@@ -42,14 +42,18 @@ enum CoordinateFormat {
 }
 
 enum InfoType {
+    //% block="used Satellites"
     UsedSatellites,
+    //% block="quality"
     Quality,
+    //% block="HDOP"
     HDOP,
+    //% block="status"
     Status
 }
 
-//% weight=100 color=#0fbc11 icon="\uf0ac"
-namespace Air530 {
+//% weight=100 color=#0fbc11 icon="\uf0ac" block="Plugin for Air530"
+namespace GNSS_Air530 {
     let rxPin = SerialPin.C16
     let txPin = SerialPin.C17
     let baudRate = BaudRate.BaudRate9600
@@ -97,7 +101,7 @@ namespace Air530 {
     }
 
 
-    //% blockId="Air530_getPos" block="GNSS Position $position im Format %format"
+    //% blockId="Air530_getPos" block="GNSS Position $position, format %format"
     export function getPosition(position: PositionType, format: CoordinateFormat): string {
         if (!sentences.GGA) return "No data"
         let p = sentences.GGA.split(',')
@@ -113,7 +117,7 @@ namespace Air530 {
         }
     }
 
-    //% blockId="Air530_getMovement" block="GNSS Movement $movement"
+    //% blockId="Air530_getMovement" block="GNSS movement $movement"
     export function getMovement(movement: MoveType): string {
         if (!sentences.RMC) return "No data"
         let p = sentences.RMC.split(',')
@@ -128,7 +132,7 @@ namespace Air530 {
         }
     }
 
-    //% blockId="Air530_getDetails" block="GNSS Details $info"
+    //% blockId="Air530_getDetails" block="GNSS details $info"
     export function getDetails(info: InfoType): string {
         let details: (() => string)[] = [
             () => sentences.GGA ? sentences.GGA.split(',')[7] : "No data", // Benutzte Satelliten
