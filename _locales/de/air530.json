@@ -13,10 +13,10 @@
   "MoveType.all|block": "alle Bewegungsinformationen",
   "InfoType.UsedSatellites|block": "verwendete Satelliten",
   "InfoType.quality|block": "Signalqualität",
-  "InfoType.HDOP|block": "HDOP"
-  "InfoType.status|block": "Status"
-  "{id:category}GNSS_Air530": "Air530 Modul",
-  "GNSS_Air530.Air530_init|block": "Initialisieree Air-530 GPS mit RX $rx TX $tx",
+  "InfoType.HDOP|block": "HDOP",
+  "InfoType.status|block": "Status",
+  "{id:category}GNSS_Air530": "GNSS Daten",
+  "GNSS_Air530.Air530_init|block": "Initialisiere Air-530 GPS mit RX $rx TX $tx",
   "GNSS_Air530.Air530_getTime|block": "GNSS Zeit und Datum $TD",
   "GNSS_Air530.Air530_getPos|block": "GNSS Position $position im Format %format",
   "GNSS_Air530.Air530_getMovement|block": "GNSS Bewegung $movement",

@@ -52,7 +52,7 @@ enum InfoType {
     Status
 }
 
-//% weight=100 color=#0fbc11 icon="\uf0ac" block="Plugin for Air530"
+//% weight=20 color=#0fbc11 icon="\uf0ac" block="GNSS Data Air530"
 namespace GNSS_Air530 {
     let rxPin = SerialPin.C16
     let txPin = SerialPin.C17
