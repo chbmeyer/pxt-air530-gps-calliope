@@ -1,0 +1,21 @@
+{
+    "name": "GNSS_Air530",
+    "description": "",
+    "dependencies": {
+        "core": "*",
+        "v3": "*"
+    },
+    "files": [
+        "README.md",
+        "_locales/de/GNSS_Air530-strings.json",
+        "air530.ts"
+    ],
+    "targetVersions": {
+        "target": "7.0.3",
+        "targetId": "calliopemini"
+    },
+    "supportedTargets": [
+        "calliopemini"
+    ],
+    "preferredEditor": "tsprj"
+}
