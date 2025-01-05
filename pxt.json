@@ -1,9 +1,8 @@
 {
     "name": "GNSS_Air530",
-    "description": "",
+    "description": "Extension for Air-530 GPS module ",
     "dependencies": {
-        "core": "*",
-        "v3": "*"
+        "core": "*"
     },
     "files": [
         "README.md",
@@ -15,7 +14,7 @@
         "targetId": "calliopemini"
     },
     "supportedTargets": [
-        "calliopemini"
-    ],
-    "preferredEditor": "tsprj"
+        "calliopemini",
+        "microbit"
+    ]
 }
